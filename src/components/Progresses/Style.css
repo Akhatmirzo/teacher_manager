@@ -1,0 +1,14 @@
+.circle-progress-bar {
+  transform: rotate(-90deg); /* Doirani vertikal qilib aylantiradi */
+}
+
+.circle-background {
+  stroke: #e6e6e6; /* Background rangi */
+}
+
+.circle-progress {
+  stroke: #4caf50; /* Progress rangi */
+  transition: stroke-dashoffset 0.35s;
+  transform: rotate(90deg);
+  transform-origin: 50% 50%;
+}
