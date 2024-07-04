@@ -8,10 +8,12 @@ import { GetClass } from "../../redux/slices/ClassSlice";
 import { auth } from "../../Firebase/Firebase";
 import { uid } from "uid";
 import CircleProgressBar from "../../components/Progresses/CircleProgressBar";
+import PrimaryLoading from "../../components/Loadings/PrimaryLoading";
 
 export default function StudentDash() {
   const dispatch = useDispatch();
   const student = useSelector((state) => state.students.student);
+  const loading = useSelector((state) => state.students.isLoading);
   const classData = useSelector((state) => state.classes.class);
   const modules = useSelector((state) => state.modules);
   const lessons = useSelector((state) => state.lessons);
@@ -19,7 +21,6 @@ export default function StudentDash() {
   const [modul, setModul] = useState([]);
   const [activeModul, setActiveModul] = useState();
   const [progress, setProgress] = useState(0);
-
   const showPass = () => {
     const password = window.document.getElementById("password");
     password.type = password.type === "password" ? "text" : "password";
@@ -81,9 +82,11 @@ export default function StudentDash() {
         {modul?.moduls?.map((_, index) => (
           <Button
             key={_.uid}
-            onClick={() => (ChangeActiveModul(_.uid))}
+            onClick={() => ChangeActiveModul(_.uid)}
             // onDoubleClick={() => (_.active ? () => "" : handleDouble(_.uid))}
-            className={`${_.active ? "" : "opacity-75"} ${_.uid === activeModul ? "bg-green-500" : ""}`}
+            className={`${_.active ? "" : "opacity-75"} ${
+              _.uid === activeModul ? "bg-green-500" : ""
+            }`}
           >
             {_.title}
           </Button>
@@ -106,27 +109,32 @@ export default function StudentDash() {
               <Table.Cell key={uid()} className=" whitespace-nowrap">
                 {student.fullname}
               </Table.Cell>
-              {lesson?.lessons && lesson.lessons.map((lesson) => (
-                <Table.Cell key={uid()} className="text-center myxl:p-2">
-                  <TextInput
-                    key={uid()}
-                    type="text"
-                    maxLength={1}
-                    defaultValue={lesson.score}
-                    disabled
-                    className="border-none w-full"
-                  />
-                </Table.Cell>
-              ))}
+              {lesson?.lessons &&
+                lesson.lessons.map((lesson) => (
+                  <Table.Cell key={uid()} className="text-center myxl:p-2">
+                    <TextInput
+                      key={uid()}
+                      type="text"
+                      maxLength={1}
+                      defaultValue={lesson.score}
+                      disabled
+                      className="border-none w-full"
+                    />
+                  </Table.Cell>
+                ))}
             </Table.Row>
           </Table.Body>
         </Table>
       </div>
 
       <div className="w-full h-[525px] shadow-lg overflow-x-hidden overflow-y-auto">
-        <div className="w-max h-full flex flex-col items-center shadow-lg py-3 px-5">
+        <div className="w-max h-full flex flex-col items-center shadow-lg py-3 px-5 relative">
           <div className="flex items-center flex-col gap-3">
-            <Avatar src={student.photo} size={"150px"} title={student.fullname} />
+            <Avatar
+              src={student.photo}
+              size={"150px"}
+              title={student.fullname}
+            />
 
             <div>
               <h2>Fullname: {student.fullname}</h2>
@@ -154,11 +162,17 @@ export default function StudentDash() {
             </div>
 
             <div>
-            <CircleProgressBar progress={progress} size={150} strokeWidth={15} />
+              <CircleProgressBar
+                progress={progress}
+                size={150}
+                strokeWidth={15}
+              />
             </div>
           </div>
         </div>
       </div>
+
+      <PrimaryLoading loading={loading} />
     </div>
   );
 }

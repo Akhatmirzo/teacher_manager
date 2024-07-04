@@ -6,11 +6,13 @@ import { GetClass } from "../../redux/slices/ClassSlice";
 import { GetLessons } from "../../redux/slices/LessonSlice";
 import { GetStudents } from "../../redux/slices/StudentSlice";
 import { uid } from "uid";
+import PrimaryLoading from "../../components/Loadings/PrimaryLoading";
 
 export default function Class() {
   const dispatch = useDispatch();
   const students = useSelector((state) => state.students);
   const classData = useSelector((state) => state.classes.class);
+  const loading = useSelector((state) => state.classes.isLoading);
   const modules = useSelector((state) => state.modules);
   const lessons = useSelector((state) => state.lessons.lessons);
   const [modul, setModul] = useState([]);
@@ -62,6 +64,7 @@ export default function Class() {
 
   useEffect(() => {
     RenderLessons(activeModul);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [students, lessons, activeModul, modul]);
 
   useMemo(() => {
@@ -128,6 +131,8 @@ export default function Class() {
           ))}
         </Table.Body>
       </Table>
+
+      <PrimaryLoading loading={loading} />
     </div>
   );
 }

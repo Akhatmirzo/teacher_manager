@@ -30,6 +30,7 @@ export function AddStudentModal({ isModal }) {
   useEffect(() => {
     dispatch(GetClasses());
     dispatch(GetModules());
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleSubmit = async (e) => {

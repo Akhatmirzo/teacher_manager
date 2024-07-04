@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { GetClasses, toggleModal } from "../../redux/slices/ClassSlice";
 import { useState } from "react";
 import { auth, db } from "../../Firebase/Firebase";
-import { doc, serverTimestamp, setDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { uid } from "uid";
 import { GetModules } from "../../redux/slices/ModulSlice";

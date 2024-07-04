@@ -28,24 +28,24 @@ function App() {
     // eslint-disable-next-line
   }, []);
 
-  // useEffect(() => {
-  //   const threshold = 160;
+  useEffect(() => {
+    const threshold = 160;
 
-  //   const detectDevTools = () => {
-  //     const width = window.outerWidth - window.innerWidth;
-  //     const height = window.outerHeight - window.innerHeight;
+    const detectDevTools = () => {
+      const width = window.outerWidth - window.innerWidth;
+      const height = window.outerHeight - window.innerHeight;
 
-  //     if (width > threshold || height > threshold) {
-  //       alert("Dev tools ochildi!");
-  //       // Saytingizni to'xtatish yoki boshqa amal bajarish
-  //       document.body.innerHTML = "Sayt ishlamayapti. Dev toolni yoping va Saytni yangilashingiz kerak!!!!!!!!!!!!";
-  //     }
-  //   };
+      if (width > threshold || height > threshold) {
+        alert("Dev tools ochildi!");
+        // Saytingizni to'xtatish yoki boshqa amal bajarish
+        document.body.innerHTML = "Sayt ishlamayapti. Dev toolni yoping va Saytni yangilashingiz kerak!!!!!!!!!!!!";
+      }
+    };
 
-  //   const interval = setInterval(detectDevTools, 1000);
+    const interval = setInterval(detectDevTools, 1000);
 
-  //   return () => clearInterval(interval);
-  // }, []);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <>

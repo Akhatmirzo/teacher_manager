@@ -41,6 +41,7 @@ export function StudentTable({ tableBody }) {
 
   useEffect(() => {
     dispatch(GetLessons())
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
