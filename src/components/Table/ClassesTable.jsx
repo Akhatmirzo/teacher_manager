@@ -1,16 +1,17 @@
 import { Table } from "flowbite-react";
 import { Link } from "react-router-dom";
+import { uid } from "uid";
 
 export function ClassesTable({ tableBody }) {
   return (
     <div className="w-full h-[calc(100vh_-_64px)] overflow-x-auto">
       <Table>
         <Table.Head>
-          <Table.HeadCell className="w-[24px]">T/r</Table.HeadCell>
-          <Table.HeadCell>Class</Table.HeadCell>
-          <Table.HeadCell>Subject</Table.HeadCell>
-          <Table.HeadCell>Student count</Table.HeadCell>
-          <Table.HeadCell>
+          <Table.HeadCell key={uid()} className="w-[24px]">T/r</Table.HeadCell>
+          <Table.HeadCell key={uid()}>Class</Table.HeadCell>
+          <Table.HeadCell key={uid()}>Subject</Table.HeadCell>
+          <Table.HeadCell key={uid()}>Student count</Table.HeadCell>
+          <Table.HeadCell key={uid()}>
             <span className="sr-only">Remove</span>
           </Table.HeadCell>
         </Table.Head>

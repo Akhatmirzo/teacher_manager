@@ -9,6 +9,7 @@ import { auth } from "../../Firebase/Firebase";
 import { uid } from "uid";
 import CircleProgressBar from "../../components/Progresses/CircleProgressBar";
 import PrimaryLoading from "../../components/Loadings/PrimaryLoading";
+import LevelBadge from "../../components/Badges/LevelBadge";
 
 export default function StudentDash() {
   const dispatch = useDispatch();
@@ -159,6 +160,8 @@ export default function StudentDash() {
               <h2>Class: {classData?.class}</h2>
               <h2>Teacher: {classData?.teacher}</h2>
               <h2>Subject: {classData?.subject}</h2>
+
+              <LevelBadge score={student.score} />
             </div>
 
             <div>

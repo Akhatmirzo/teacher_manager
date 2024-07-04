@@ -8,6 +8,7 @@ import { db } from "../Firebase/Firebase";
 import { GetStudents } from "../redux/slices/StudentSlice";
 import { toast } from "react-toastify";
 import useDebounce from "../hooks/useDebounce";
+import LevelBadge from "../components/Badges/LevelBadge";
 
 export default function Dashboard() {
   const dispatch = useDispatch();
@@ -92,7 +93,7 @@ export default function Dashboard() {
   };
 
   const decrementScore = async (student) => {
-    if (student && student.score > 0) {
+    if (student) {
       setCompLoad(true);
       let newStudent = {
         ...student,
@@ -124,6 +125,7 @@ export default function Dashboard() {
   useMemo(() => {
     const { score, student } = debouncedValue;
     ChangeScore(student, score);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedValue]);
 
   return (
@@ -147,7 +149,7 @@ export default function Dashboard() {
         {classSelect.length > 0 ? (
           classSelect.map((classStud) => (
             <Card
-              className="w-max p-2"
+              className="w-max p-2 relative"
               key={uid()}
               imgSrc={
                 classStud.photo ||
@@ -206,6 +208,10 @@ export default function Dashboard() {
                     <span className="text-4xl text-center leading-6">+</span>
                   </button>
                 </div>
+              </div>
+
+              <div className="flex items-end justify-end">
+                <LevelBadge score={classStud.score} />
               </div>
             </Card>
           ))

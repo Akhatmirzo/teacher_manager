@@ -7,6 +7,7 @@ import { deleteDoc, doc } from "firebase/firestore";
 import { useDispatch, useSelector } from "react-redux";
 import { GetLessons } from "../../redux/slices/LessonSlice";
 import { useEffect } from "react";
+import { uid } from "uid";
 
 export function StudentTable({ tableBody }) {
   const dispatch = useDispatch();
@@ -48,11 +49,11 @@ export function StudentTable({ tableBody }) {
     <div className="w-full h-[calc(100vh_-_64px)] overflow-x-auto">
       <Table>
         <Table.Head>
-          <Table.HeadCell className="w-[24px] p-2">T/r</Table.HeadCell>
-          <Table.HeadCell>Fullname</Table.HeadCell>
-          <Table.HeadCell>email</Table.HeadCell>
-          <Table.HeadCell>password</Table.HeadCell>
-          <Table.HeadCell>
+          <Table.HeadCell key={uid()} className="w-[24px] p-2">T/r</Table.HeadCell>
+          <Table.HeadCell key={uid()}>Fullname</Table.HeadCell>
+          <Table.HeadCell key={uid()}>email</Table.HeadCell>
+          <Table.HeadCell key={uid()}>password</Table.HeadCell>
+          <Table.HeadCell key={uid()}>
             <span className="sr-only">Remove</span>
           </Table.HeadCell>
         </Table.Head>

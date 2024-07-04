@@ -12,6 +12,7 @@ import UpdateModul from "../hooks/UpdateModul";
 import { GetModules } from "../redux/slices/ModulSlice";
 import ChildLoading from "../components/Loadings/ChildLoading";
 import PrimaryLoading from "../components/Loadings/PrimaryLoading";
+import { uid } from "uid";
 
 export default function ClassTable() {
   const { id } = useParams();
@@ -109,6 +110,7 @@ export default function ClassTable() {
 
   useEffect(() => {
     RenderLessons(activeModul);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [students, lessons, activeModul, modul]);
 
   const handleDouble = async (uid) => {
@@ -155,27 +157,27 @@ export default function ClassTable() {
       </div>
       <form className="w-full h-screen">
         <Table striped>
-          <Table.Head>
-            <Table.HeadCell className="w-[20px]">t/r</Table.HeadCell>
-            <Table.HeadCell>Fullname</Table.HeadCell>
+          <Table.Head key={uid()}>
+            <Table.HeadCell key={uid()} className="w-[20px]">t/r</Table.HeadCell>
+            <Table.HeadCell key={uid()}>Fullname</Table.HeadCell>
             {Array(11)
               .fill()
               .map((_, index) => (
-                <Table.HeadCell className="text-center" key={index}>
+                <Table.HeadCell className="text-center" key={uid()}>
                   {index + 1}
                 </Table.HeadCell>
               ))}
           </Table.Head>
-          <Table.Body className="divide-y">
+          <Table.Body key={uid()} className="divide-y">
             {classStudents?.map((student, index) => (
-              <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                <Table.Cell>{index + 1}</Table.Cell>
-                <Table.Cell className=" whitespace-nowrap">
+              <Table.Row key={uid()} className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                <Table.Cell key={uid()}>{index + 1}</Table.Cell>
+                <Table.Cell key={uid()} className=" whitespace-nowrap">
                   {student.fullname}
                 </Table.Cell>
                 {student.lessons &&
                   student.lessons.lessons.map((lesson) => (
-                    <Table.Cell className="text-center myxl:p-2">
+                    <Table.Cell key={uid()} className="text-center myxl:p-2">
                       <TextInput
                         type="text"
                         maxLength={1}
