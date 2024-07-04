@@ -116,7 +116,7 @@ export function AddStudentModal({ isModal }) {
       email,
       password,
       role: "student",
-      score: 0
+      score: 10
     };
 
     const name = newStudent.fullname.split(" ")[0].toLowerCase();
