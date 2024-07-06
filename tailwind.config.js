@@ -21,6 +21,9 @@ module.exports = {
       sm: { min: "540px" },
       // => @media (min-width: 639px) { ... }
 
+      'my2xl': { max: "1536px" },
+      // => @media (max-width: 1279px) { ... }
+
       'myxl': { max: "1279px" },
       // => @media (max-width: 1279px) { ... }
 

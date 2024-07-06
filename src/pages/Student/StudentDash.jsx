@@ -128,7 +128,7 @@ export default function StudentDash() {
         </Table>
       </div>
 
-      <div className="w-full h-[525px] shadow-lg overflow-x-hidden overflow-y-auto">
+      <div className="w-full h-full shadow-lg overflow-x-hidden overflow-y-auto">
         <div className="w-max h-full flex flex-col items-center shadow-lg py-3 px-5 relative">
           <div className="flex items-center flex-col gap-3">
             <Avatar
@@ -160,8 +160,6 @@ export default function StudentDash() {
               <h2>Class: {classData?.class}</h2>
               <h2>Teacher: {classData?.teacher}</h2>
               <h2>Subject: {classData?.subject}</h2>
-
-              <LevelBadge score={student.score} />
             </div>
 
             <div>

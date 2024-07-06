@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Card, Label, Select, TextInput } from "flowbite-react";
 import ChildLoading from "../components/Loadings/ChildLoading";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,6 +9,7 @@ import { GetStudents } from "../redux/slices/StudentSlice";
 import { toast } from "react-toastify";
 import useDebounce from "../hooks/useDebounce";
 import LevelBadge from "../components/Badges/LevelBadge";
+import { calculateLevel } from "../utils/CalcLevel";
 
 export default function Dashboard() {
   const dispatch = useDispatch();
@@ -125,8 +126,17 @@ export default function Dashboard() {
   useMemo(() => {
     const { score, student } = debouncedValue;
     ChangeScore(student, score);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedValue]);
+
+  // Level Badge images
+  const images = [
+    "https://media.istockphoto.com/id/645788690/photo/funny-sheep-portrait-of-sheep-showing-tongue.jpg?s=612x612&w=0&k=20&c=QeL2ZWDvP1rrEtPw_zl4BTHxKILn1IRxDKs_YKSdrbo=",
+    "https://www.shutterstock.com/shutterstock/photos/1381519268/display_1500/stock-photo-funny-face-idiot-the-moron-fool-clown-foolish-man-dumb-more-stupid-1381519268.jpg",
+    null,
+    null,
+    null,
+  ];
 
   return (
     <div className="w-full h-screen p-2 overflow-y-auto overflow-x-hidden relative">
@@ -145,18 +155,14 @@ export default function Dashboard() {
         </Select>
       </div>
 
-      <div className="w-full py-2 flex gap-3 flex-wrap justify-center">
+      <div className="w-full py-2 grid grid-cols-3 gap-3 my2xl:grid-cols-2">
         {classSelect.length > 0 ? (
           classSelect.map((classStud) => (
             <Card
-              className="w-max p-2 relative"
+              className="w-full flex justify-between p-2 relative"
               key={uid()}
               imgSrc={
-                classStud.photo ||
-                `https://avatar.iran.liara.run/public/boy?username=${
-                  classStud.fullname.split(" ")[0] +
-                    classStud.fullname.split(" ")[1] || ""
-                }`
+                images[calculateLevel(classStud.score)] || classStud.photo
               }
               horizontal
             >
@@ -164,9 +170,6 @@ export default function Dashboard() {
                 <h2 className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
                   {classStud.fullname}
                 </h2>
-                <h3 className="text-xl font-bold tracking-tight text-[#656363] dark:text-white capitalize">
-                  {classStud.role}
-                </h3>
               </div>
               <div>
                 <h3 className="text-lg font-bold font-mono mb-2">
