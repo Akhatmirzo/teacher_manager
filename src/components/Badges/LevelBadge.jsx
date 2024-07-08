@@ -15,7 +15,7 @@ export default function LevelBadge({ score }) {
 
   return (
     <div
-      className={`flex items-center rounded-full py-1 px-4 font-medium border text-green-900 border-green-300`}
+      className={`flex items-center rounded-full py-1 px-4 font-medium border border-green-300 text-white`}
       style={{ backgroundColor: color[calcScore]}}
     >
       {level[calcScore]}

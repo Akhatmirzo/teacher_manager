@@ -38,7 +38,7 @@ function App() {
       if (width > threshold || height > threshold) {
         alert("Dev tools ochildi!");
         // Saytingizni to'xtatish yoki boshqa amal bajarish
-        document.body.innerHTML = "Sayt ishlamayapti. Dev toolni yoping va Saytni yangilashingiz kerak!!!!!!!!!!!!";
+        document.body.innerHTML = "Sayt ishlamayapti. Dev toolni yoping va Saytni browserning reflesh tugmaasi orqaali yangilashingiz kerak!!!!!!!!!!!!";
       }
     };
 

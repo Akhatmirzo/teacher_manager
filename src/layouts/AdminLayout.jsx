@@ -34,25 +34,7 @@ export default function AdminLayout() {
     };
   }, []);
 
-  // useEffect(() => {
-  //   const handleTouchMove = (e) => {
-  //     e.preventDefault();
-  //   };
-
-  //   const handleBeforeUnload = (e) => {
-  //     e.preventDefault();
-  //     e.returnValue = "Iltimos Navigatsiyadagi Refleshdan foydalaning"; // Ogohlantirishni faollashtiradi
-  //   };
-
-  //   document.addEventListener("touchmove", handleTouchMove, { passive: false });
-  //   window.addEventListener("beforeunload", handleBeforeUnload);
-
-  //   // Cleanup event listeners on component unmount
-  //   return () => {
-  //     document.removeEventListener("touchmove", handleTouchMove);
-  //     window.removeEventListener("beforeunload", handleBeforeUnload);
-  //   };
-  // }, []);
+  
 
   return (
     <div className="flex">

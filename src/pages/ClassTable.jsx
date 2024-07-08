@@ -68,7 +68,7 @@ export default function ClassTable() {
     if (value) {
       setPrimaryLoad(true);
       const updatedLessons = lessons.lessons.map((lesson) =>
-        lesson.uid === lessonId ? { ...lesson, score: value } : lesson
+        lesson.uid === lessonId ? { ...lesson, score: Number(value) } : lesson
       );
 
       const newLessons = {

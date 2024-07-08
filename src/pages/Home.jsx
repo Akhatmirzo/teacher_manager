@@ -58,12 +58,13 @@ export default function Home() {
   useEffect(() => {
     checkLayout();
     dispatch(GetStudents());
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auth]);
 
   return (
     <div>
       <Routes>
-        <Route path="/" element={<h1>Iltimos Saytni yangilang</h1>} />
+        <Route path="/" element={<h1>Iltimos Saytni browserning reflesh tugmasi orqali qayta yangilang</h1>} />
         <Route
           path={`/teacher`}
           element={layout === "teacher" && <AdminLayout />}

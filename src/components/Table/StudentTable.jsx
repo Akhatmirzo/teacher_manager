@@ -11,10 +11,10 @@ import { uid } from "uid";
 
 export function StudentTable({ tableBody }) {
   const dispatch = useDispatch();
-  const lessons = useSelector(state => state.lessons.lessons)
-  
+  const lessons = useSelector((state) => state.lessons.lessons);
+
   const showPass = (index) => {
-    const password = window.document.getElementById("password"+index);
+    const password = window.document.getElementById("password" + index);
     password.type = password.type === "password" ? "text" : "password";
   };
 
@@ -24,7 +24,7 @@ export function StudentTable({ tableBody }) {
         await deleteDoc(doc(db, "students", id));
         await deleteDoc(doc(db, "roles", id));
 
-        const studentLessons = lessons.filter(lesson => lesson.userId === id);
+        const studentLessons = lessons.filter((lesson) => lesson.userId === id);
 
         for (const lesson of studentLessons) {
           await deleteDoc(doc(db, "lessons", lesson.id));
@@ -41,21 +41,21 @@ export function StudentTable({ tableBody }) {
   };
 
   useEffect(() => {
-    dispatch(GetLessons())
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    dispatch(GetLessons());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="w-full h-[calc(100vh_-_64px)] overflow-x-auto">
       <Table>
         <Table.Head>
-          <Table.HeadCell key={uid()} className="w-[24px] p-2">T/r</Table.HeadCell>
+          <Table.HeadCell key={uid()} className="w-[24px] p-2">
+            T/r
+          </Table.HeadCell>
           <Table.HeadCell key={uid()}>Fullname</Table.HeadCell>
           <Table.HeadCell key={uid()}>email</Table.HeadCell>
           <Table.HeadCell key={uid()}>password</Table.HeadCell>
-          <Table.HeadCell key={uid()}>
-            <span className="sr-only">Remove</span>
-          </Table.HeadCell>
+          <Table.HeadCell key={uid()}></Table.HeadCell>
         </Table.Head>
         <Table.Body className="divide-y">
           {tableBody &&
@@ -69,7 +69,7 @@ export function StudentTable({ tableBody }) {
                 <Table.Cell className=" w-2/12 p-0">
                   <div className="flex items-center">
                     <input
-                      id={"password"+index}
+                      id={"password" + index}
                       type="password"
                       disabled
                       className="w-full border-none"

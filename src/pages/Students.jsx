@@ -6,6 +6,7 @@ import { StudentTable } from "../components/Table/StudentTable";
 import { useDispatch, useSelector } from "react-redux";
 import { GetStudents } from "../redux/slices/StudentSlice";
 import { auth } from "../Firebase/Firebase";
+import { uid } from "uid";
 
 export default function Students() {
   const students = useSelector((state) => state.students);
@@ -13,6 +14,7 @@ export default function Students() {
 
   useEffect(() => {
     dispatch(GetStudents())
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const filterStudents = useMemo(() => {
@@ -23,7 +25,7 @@ export default function Students() {
     <div className="w-full">
       <StudentsNav />
       <div className="w-full h-[calc(100vh_-_64px)] relative">
-        <StudentTable tableBody={filterStudents} />
+        <StudentTable key={uid()} tableBody={filterStudents} />
         <ChildLoading loading={students.isLoading} />
       </div>
       <AddStudentModal isModal={students.modal} />

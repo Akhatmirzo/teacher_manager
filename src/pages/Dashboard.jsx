@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import React, { useEffect, useMemo, useState } from "react";
 import { Card, Label, Select, TextInput } from "flowbite-react";
 import ChildLoading from "../components/Loadings/ChildLoading";
@@ -10,12 +11,18 @@ import { toast } from "react-toastify";
 import useDebounce from "../hooks/useDebounce";
 import LevelBadge from "../components/Badges/LevelBadge";
 import { calculateLevel } from "../utils/CalcLevel";
+import images from "../assets/images";
+import CalcScoreProgres from "../components/Progresses/CalcScoreProgres";
+import { GetLessons } from "../redux/slices/LessonSlice";
+import { GetModules } from "../redux/slices/ModulSlice";
 
 export default function Dashboard() {
   const dispatch = useDispatch();
   const [classSelect, setClassSelect] = useState([]);
   const classes = useSelector((state) => state.classes);
   const students = useSelector((state) => state.students);
+  const lessons = useSelector((state) => state.lessons.lessons);
+  const modules = useSelector((state) => state.modules);
   const [compLoad, setCompLoad] = useState(false);
   const [upgradeScore, setUpgradeScore] = useState({
     score: "",
@@ -23,19 +30,38 @@ export default function Dashboard() {
   });
   const debouncedValue = useDebounce(upgradeScore, 100);
 
-  async function getStudent(id) {
+  async function getStudents(id) {
+    const modul = modules?.modules?.find((module) => module.classId === id);
+    let activeModul = null;
+
+    modul.moduls.forEach((modul) => {
+      if (modul.active === true) {
+        activeModul = modul;
+      }
+    });
+
     const classStuds = students?.students
       ?.filter((student) => student.classId === id)
       .sort((a, b) => a.fullname.localeCompare(b.fullname));
 
-    return classStuds;
+    const newClassStud = classStuds.map((stud) => {
+      const lesson = lessons.find((lesson) => {
+        if (stud.uid === lesson.userId && lesson.modulId === activeModul.uid) {
+          return lesson;
+        }
+      });
+
+      return { ...stud, lessons: lesson };
+    });
+
+    return newClassStud;
   }
 
   const setSelectClass = async (e) => {
     const id = e.target.value;
 
     if (id) {
-      const classStudents = await getStudent(id);
+      const classStudents = await getStudents(id);
 
       setClassSelect(classStudents);
     }
@@ -130,13 +156,19 @@ export default function Dashboard() {
   }, [debouncedValue]);
 
   // Level Badge images
-  const images = [
-    "https://media.istockphoto.com/id/645788690/photo/funny-sheep-portrait-of-sheep-showing-tongue.jpg?s=612x612&w=0&k=20&c=QeL2ZWDvP1rrEtPw_zl4BTHxKILn1IRxDKs_YKSdrbo=",
-    "https://www.shutterstock.com/shutterstock/photos/1381519268/display_1500/stock-photo-funny-face-idiot-the-moron-fool-clown-foolish-man-dumb-more-stupid-1381519268.jpg",
-    null,
-    null,
+  const levelImages = [
+    images.sheep,
+    images.idiot,
+    images.junior,
+    images.middle,
     null,
   ];
+
+  useEffect(() => {
+    dispatch(GetLessons());
+    dispatch(GetModules());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="w-full h-screen p-2 overflow-y-auto overflow-x-hidden relative">
@@ -157,17 +189,17 @@ export default function Dashboard() {
 
       <div className="w-full py-2 grid grid-cols-3 gap-3 my2xl:grid-cols-2">
         {classSelect.length > 0 ? (
-          classSelect.map((classStud) => (
+          classSelect.map((classStud, index) => (
             <Card
-              className="w-full flex justify-between p-2 relative"
+              className=" flex p-2 relative"
               key={uid()}
               imgSrc={
-                images[calculateLevel(classStud.score)] || classStud.photo
+                levelImages[calculateLevel(classStud.score)] || classStud.photo
               }
               horizontal
             >
-              <div className="flex items-center gap-2 flex-row-reverse">
-                <h2 className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+              <div className="w-full flex items-center gap-2 flex-row-reverse">
+                <h2 className="w-full text-xl font-bold tracking-tight text-gray-900 dark:text-white">
                   {classStud.fullname}
                 </h2>
               </div>
@@ -213,7 +245,8 @@ export default function Dashboard() {
                 </div>
               </div>
 
-              <div className="flex items-end justify-end">
+              <div className="flex items-end justify-between">
+                <CalcScoreProgres data={classStud?.lessons?.lessons} />
                 <LevelBadge score={classStud.score} />
               </div>
             </Card>

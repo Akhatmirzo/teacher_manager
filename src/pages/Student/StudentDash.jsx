@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useMemo, useState } from "react";
 import { Button, Table, TextInput } from "flowbite-react";
@@ -9,7 +10,9 @@ import { auth } from "../../Firebase/Firebase";
 import { uid } from "uid";
 import CircleProgressBar from "../../components/Progresses/CircleProgressBar";
 import PrimaryLoading from "../../components/Loadings/PrimaryLoading";
-import LevelBadge from "../../components/Badges/LevelBadge";
+import images from "../../assets/images";
+import { calculateLevel } from "../../utils/CalcLevel";
+import CalcScoreProgres from "../../components/Progresses/CalcScoreProgres";
 
 export default function StudentDash() {
   const dispatch = useDispatch();
@@ -77,6 +80,14 @@ export default function StudentDash() {
     return () => clearInterval(interval);
   }, [student]);
 
+  const levelImages = [
+    images.sheep,
+    images.idiot,
+    images.junior,
+    images.middle,
+    null,
+  ];
+
   return (
     <div className="w-full flex flex-col gap-2">
       <div className="w-full flex items-center justify-center gap-2 p-2 flex-wrap">
@@ -128,11 +139,11 @@ export default function StudentDash() {
         </Table>
       </div>
 
-      <div className="w-full h-full shadow-lg overflow-x-hidden overflow-y-auto">
-        <div className="w-max h-full flex flex-col items-center shadow-lg py-3 px-5 relative">
-          <div className="flex items-center flex-col gap-3">
+      <div className="w-full h-[calc(100vh-250px)] shadow-lg overflow-x-hidden overflow-y-auto">
+        <div className="flex  ">
+          <div className="w-max h-full flex items-center shadow-lg flex-col gap-3 py-3 px-5 relative">
             <Avatar
-              src={student.photo}
+              src={levelImages[calculateLevel(student?.score)] || student.photo}
               size={"150px"}
               title={student.fullname}
             />
@@ -169,6 +180,22 @@ export default function StudentDash() {
                 strokeWidth={15}
               />
             </div>
+          </div>
+
+          <div className="w-max h-full flex shadow-lg flex-col gap-3 py-3 px-5 relative">
+            <h2 className="text-xl font-bold font-mono text-center">
+              Calculate exam score
+            </h2>
+            <h3>
+              Active Modul:{" "}
+              {modul?.moduls?.map((modul) => {
+                if (modul.active) {
+                  return modul.title;
+                }
+              })}
+            </h3>
+
+            <CalcScoreProgres data={lesson?.lessons} />
           </div>
         </div>
       </div>

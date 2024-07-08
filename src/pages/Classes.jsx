@@ -5,6 +5,7 @@ import { AddClassModal } from "../components/Modal/AddClassModal";
 import { useDispatch, useSelector } from "react-redux";
 import ChildLoading from "../components/Loadings/ChildLoading";
 import { GetClasses } from "../redux/slices/ClassSlice";
+import { uid } from "uid";
 
 export default function Classes() {
   const dispatch = useDispatch();
@@ -12,13 +13,14 @@ export default function Classes() {
 
   useEffect(() => {
     dispatch(GetClasses())
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div className="w-full">
       <ClassesNav />
       <div className="w-full h-[calc(100vh_-_64px)] relative">
-        <ClassesTable tableBody={classes.classes} />
+        <ClassesTable key={uid()} tableBody={classes.classes} />
         <ChildLoading loading={classes.isLoading} />
       </div>
 
